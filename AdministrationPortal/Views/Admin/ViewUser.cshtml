@@ -1,0 +1,72 @@
+﻿@model AdministrationPortal.Models.ViewModels.UserVM
+
+@{
+    ViewData["Title"] = "Resident Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="profile-wrapper">
+
+    <!-- HEADER -->
+    <div class="profile-header glass">
+        <img src="@Model.PhotoUrl" class="profile-avatar" />
+
+        <div>
+            <h2>@Model.FirstName @Model.MiddleName @Model.LastName @Model.Suffix</h2>
+            <span class="status @(Model.IsActive ? "active" : "inactive")">
+                @(Model.IsActive ? "Active Resident" : "Deactivated")
+            </span>
+        </div>
+    </div>
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card glass">
+
+        <div class="profile-section">
+            <h4>Personal Information</h4>
+            <div class="info-grid">
+                <div><label>Date of Birth</label><p>@Model.DateOfBirth.ToString("dd/MM/yyyy")</p></div>
+                <div><label>Age</label><p>@Model.Age</p></div>
+                <div><label>Sex</label><p>@Model.Sex</p></div>
+                <div><label>Civil Status</label><p>@Model.CivilStatus</p></div>
+                <div><label>Religion</label><p>@Model.Religion</p></div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h4>Address</h4>
+            <div class="info-grid">
+                <div><label>House / Street</label><p>@Model.Street</p></div>
+                <div><label>Barangay</label><p>@Model.Barangay</p></div>
+                <div><label>City</label><p>@Model.City</p></div>
+                <div><label>Province</label><p>@Model.Province</p></div>
+                <div>
+                    <label>Length of Stay</label>
+                    <p>@Model.StayYears yrs @Model.StayMonths mos</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h4>Contact</h4>
+            <div class="info-grid">
+                <div><label>Phone</label><p>@Model.ContactNumber</p></div>
+                <div><label>Email</label><p>@Model.Email</p></div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h4>Checklist</h4>
+            <span class="badge @(Model.IsVoter ? "badge-green" : "badge-gray")">
+                @(Model.IsVoter ? "Voter" : "Non-Voter")
+            </span>
+        </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="profile-actions">
+        <a asp-action="ManageUsers" class="btn-secondary">Back</a>
+        <a asp-action="EditUser" asp-route-id="@Model.Id" class="btn-primary">Edit</a>
+    </div>
+
+</div>

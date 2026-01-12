@@ -1,0 +1,112 @@
+﻿@model List<AdministrationPortal.Models.ViewModels.UserVM>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <h2>Residents List</h2>
+
+    <div class="page-actions">
+        <input id="search"
+               type="text"
+               placeholder="Search residents..."
+               class="search-input" />
+
+        <a asp-action="AddUser" class="btn-primary">ADD NEW</a>
+    </div>
+</div>
+
+<!-- USERS TABLE -->
+<div class="table-card">
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Contact Number</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@user.PhotoUrl"
+                             class="avatar"
+                             onerror="this.src='/images/default-avatar.png'" />
+                    </td>
+
+                    <td>@user.FullName</td>
+                    <td>@user.Address</td>
+                    <td>@user.ContactNumber</td>
+
+                    <td>
+                        <span class="status @(user.IsActive ? "active" : "inactive")">
+                            @(user.IsActive ? "Active" : "Deactivated")
+                        </span>
+                    </td>
+
+                    <td class="actions">
+                        <a asp-action="ViewUser" asp-route-id="@user.Id" title="View">
+                            <i class="bi bi-eye"></i>
+                        </a>
+
+                        <a asp-action="EditUser" asp-route-id="@user.Id" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                        @if (user.IsActive)
+                        {
+                            <a asp-action="Deactivate"
+                               asp-route-id="@user.Id"
+                               title="Deactivate">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Reactivate"
+                               asp-route-id="@user.Id"
+                               title="Reactivate">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("search").addEventListener("keyup", function () {
+            const q = this.value.toLowerCase();
+
+            document.querySelectorAll("tbody tr").forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(q)
+                    ? ""
+                    : "none";
+            });
+        });
+    </script>
+
+    <script>
+        function confirmDelete(id) {
+            document.getElementById("confirmDeleteBtn").href =
+                "/Admin/Deactivate/" + id;
+
+            new bootstrap.Modal(
+                document.getElementById("deleteModal")
+            ).show();
+        }
+    </script>
+
+}

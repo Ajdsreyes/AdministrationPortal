@@ -1,0 +1,94 @@
+﻿@model List<AdministrationPortal.Models.ViewModels.ServiceRequestVM>
+
+@{
+    ViewData["Title"] = "Service Requests";
+}
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <h2>@ViewBag.ServiceName Requests</h2>
+
+    <div class="filter-bar">
+        <button class="btn-filter active" data-status="all">All</button>
+        <button class="btn-filter" data-status="pending">Pending</button>
+    </div>
+</div>
+
+<!-- REQUESTS TABLE -->
+<div class="table-card">
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Resident</th>
+                <th>Date Requested</th>
+                <th>Status</th>
+                <th style="width:120px;">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr data-status="@r.Status.ToLower().Replace(" ", "")">
+                    <td>
+                        <div class="user-info">
+                            <img src="@r.UploadedPhotoUrl" class="avatar" />
+                            <span>@r.FullName</span>
+                        </div>
+                    </td>
+
+                    <td>@r.DateRequested.ToString("MM/dd/yyyy")</td>
+
+                    <td>
+                        <select class="status-select @r.Status.ToLower().Replace(" ", "")">
+                            <option selected>@r.Status</option>
+                            <option>Pending</option>
+                            <option>Approved</option>
+                            <option>Rejected</option>
+                            <option>Ready for Claim</option>
+                            <option>Released</option>
+                        </select>
+                    </td>
+
+                    <td class="actions">
+                        <!-- VIEW REQUEST -->
+                        <i class="bi bi-eye action-icon"
+                           title="View Details"
+                           onclick="location.href='@Url.Action("ViewServiceRequest", "Admin", new { id = r.Id })'">
+                        </i>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        // Change color when status changes
+        document.querySelectorAll(".status-select").forEach(select => {
+            select.addEventListener("change", function () {
+                this.className = "status-select " +
+                    this.value.toLowerCase().replaceAll(" ", "");
+            });
+        });
+
+        // Filter buttons
+        document.querySelectorAll(".btn-filter").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".btn-filter")
+                    .forEach(b => b.classList.remove("active"));
+
+                btn.classList.add("active");
+
+                const filter = btn.dataset.status;
+
+                document.querySelectorAll("tbody tr").forEach(row => {
+                    const status = row.dataset.status;
+                    row.style.display =
+                        filter === "all" || status === filter ? "" : "none";
+                });
+            });
+        });
+    </script>
+}

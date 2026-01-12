@@ -1,0 +1,51 @@
+﻿@model AdministrationPortal.Models.ViewModels.UserVM
+@{
+    ViewData["Title"] = "Edit Resident";
+}
+
+<div class="page-header">
+    <h2>Edit Resident Profile</h2>
+</div>
+
+<form asp-action="EditUser" method="post" class="table-card">
+
+    <input type="hidden" asp-for="Id" />
+
+    <h4>Personal Information</h4>
+    <div class="form-grid">
+        <input asp-for="FirstName" placeholder="First Name" />
+        <input asp-for="MiddleName" placeholder="Middle Name" />
+        <input asp-for="LastName" placeholder="Last Name" />
+        <input asp-for="Suffix" placeholder="Suffix" />
+        <input asp-for="DateOfBirth" type="date" />
+        <input asp-for="Sex" placeholder="Sex" />
+        <input asp-for="CivilStatus" placeholder="Civil Status" />
+        <input asp-for="Religion" placeholder="Religion" />
+    </div>
+
+    <h4>Address</h4>
+    <div class="form-grid">
+        <input asp-for="Street" placeholder="House # / Street" />
+        <input asp-for="Barangay" placeholder="Barangay" />
+        <input asp-for="City" placeholder="City" />
+        <input asp-for="Province" placeholder="Province" />
+        <input asp-for="StayYears" placeholder="Years of Stay" />
+        <input asp-for="StayMonths" placeholder="Months of Stay" />
+    </div>
+
+    <h4>Contact</h4>
+    <div class="form-grid">
+        <input asp-for="ContactNumber" placeholder="Contact Number" />
+        <input asp-for="Email" placeholder="Email Address" />
+    </div>
+
+    <h4>Checklist</h4>
+    <label>
+        <input asp-for="IsVoter" /> Registered Voter
+    </label>
+
+    <div style="margin-top:20px">
+        <button class="btn-primary">Save Changes</button>
+        <a asp-action="ManageUsers" class="btn-secondary">Cancel</a>
+    </div>
+</form>

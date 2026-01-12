@@ -1,0 +1,135 @@
+﻿@model AdministrationPortal.Models.ViewModels.AdminDashboardVM
+
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- HEADER -->
+<div class="header">
+    <div>
+        <h2>Mabuhay, Barangay Malanday!</h2>
+        <p>Maligayang pagbabalik, kaibigan</p>
+    </div>
+
+    <div class="header-right">
+        <input type="text" placeholder="Search file and folder" />
+        <button>Create New</button>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <div class="icon"></div>
+        <button type="button" onclick="toggleDark()">🌙</button>
+
+    </div>
+</div>
+
+<div class="stats">
+
+    <div class="card">
+        <div class="card-icon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <p>Total Registered Users</p>
+        <h3 class="counter" data-target="@Model.TotalUsers">0</h3>
+        <small>Last update: 12 Jan 2026</small>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">
+            <i class="bi bi-file-earmark-text"></i>
+        </div>
+        <p>Total Service Request</p>
+        <h3 class="counter" data-target="@Model.TotalRequests">0</h3>
+        <small>Last update: 12 Jan 2026</small>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">
+            <i class="bi bi-check-circle"></i>
+        </div>
+        <p>Approved Requests</p>
+        <h3 class="counter" data-target="@Model.ApprovedRequests">0</h3>
+        <small>Last update: 12 Jan 2026</small>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">
+            <i class="bi bi-x-circle"></i>
+        </div>
+        <p>Rejected Requests</p>
+        <h3 class="counter" data-target="@Model.RejectedRequests">0</h3>
+        <small>Last update: 12 Jan 2026</small>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">
+            <i class="bi bi-folder-check"></i>
+        </div>
+        <p>Ready to Claim Documents</p>
+        <h3 class="counter" data-target="@Model.ReadyToClaim">0</h3>
+        <small>Last update: 12 Jan 2026</small>
+    </div>
+
+</div>
+
+
+<!-- LOWER GRID -->
+<div class="bottom">
+    <div class="documents">
+        <div class="section-title">
+            <h4>Barangay Released Documents</h4>
+            <span>View all</span>
+        </div>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Members</th>
+                <th>Size</th>
+                <th>Last Modified</th>
+            </tr>
+            <tr>
+                <td>Barangay Clearance</td>
+                <td>3 members</td>
+                <td>3 MB</td>
+                <td>Sep 13, 2023</td>
+            </tr>
+            <tr>
+                <td>Barangay Certificate</td>
+                <td>5 members</td>
+                <td>8 MB</td>
+                <td>Sep 15, 2023</td>
+            </tr>
+            <tr>
+                <td>Cedula</td>
+                <td>2 members</td>
+                <td>4 MB</td>
+                <td>Sep 24, 2023</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="right-panels">
+        <div class="chart-box">
+            <h4>Total Number of Residents</h4>
+
+            <div class="donut">
+                <div class="donut-center">
+                    <span>15,000</span>
+                    <small>Total</small>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="recent">
+            <div class="section-title">
+                <h4>Recent Open</h4>
+                <span>View all</span>
+            </div>
+
+            <div class="file">Barangay ID <span>3.5 MB</span></div>
+            <div class="file">Cedula <span>5.8 MB</span></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@model List<AdministrationPortal.Models.ViewModels.ServiceVM>
+@{
+    ViewData["Title"] = "Barangay Services";
+}
+
+<div class="page-header">
+    <h2>Barangay Services</h2>
+    <a asp-action="AddService" class="btn-primary">+ Add Service</a>
+</div>
+
+<div class="service-grid">
+    @foreach (var s in Model)
+    {
+        <div class="service-card">
+
+            <!-- HEADER -->
+            <div class="service-header">
+                <div class="service-icon">
+                    <i class="bi @s.Icon"></i>
+                </div>
+
+                <span class="badge @(s.IsEnabled ? "badge-active" : "badge-disabled")">
+                    @(s.IsEnabled ? "Enabled" : "Disabled")
+                </span>
+            </div>
+
+            <!-- SERVICE NAME -->
+            <h4>@s.ServiceName</h4>
+
+            <!-- 📊 SERVICE ANALYTICS (PUT IT HERE) -->
+            <div class="service-stats">
+                <span>Pending: <b>@s.Pending</b></span>
+                <span>Approved: <b>@s.Approved</b></span>
+                <span>Ready: <b>@s.Ready</b></span>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="service-actions">
+                <a asp-action="ServiceRequests"
+                   asp-route-id="@s.Id"
+                   title="View Requests">
+                    <i class="bi bi-eye"></i>
+                </a>
+
+                <a asp-action="EditService"
+                   asp-route-id="@s.Id"
+                   title="Edit Service">
+                    <i class="bi bi-pencil"></i>
+                </a>
+
+                <a asp-action="ToggleService"
+                   asp-route-id="@s.Id"
+                   title="Enable / Disable">
+                    <i class="bi @(s.IsEnabled ? "bi-toggle-on text-success" : "bi-toggle-off text-muted")"></i>
+                </a>
+            </div>
+
+        </div>
+    }
+</div>

@@ -1,5 +1,66 @@
-﻿<div class="table-card">
-    <h3>Service Information</h3>
-    <input placeholder="Service Name" />
-    <button class="btn-primary">Save</button>
-</div>
+﻿@model AdministrationPortal.Models.ViewModels.ServiceVM
+@{
+    ViewData["Title"] = "Add Barangay Service";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - iAssist</title>
+
+    <!-- SAME CSS AS LOGIN PAGE -->
+    <link rel="stylesheet" href="~/css/admin-login.css" />
+</head>
+
+<body class="login-body">
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <h2>Add Barangay Service</h2>
+            <p>Create a new barangay service</p>
+
+            <form asp-action="AddService" method="post">
+
+                <div class="form-group">
+                    <label>Service Name</label>
+                    <input asp-for="ServiceName"
+                           class="form-control"
+                           placeholder="e.g. Barangay Residency Certificate"
+                           required />
+                </div>
+
+                <div class="form-group">
+                    <label>Service Icon</label>
+                    <input asp-for="Icon"
+                           class="form-control"
+                           placeholder="bi-file-earmark-text" />
+                    <small class="text-muted">
+                        Use Bootstrap Icons (bi-file-earmark-text, bi-person-badge)
+                    </small>
+                </div>
+
+                <div class="form-actions center">
+                    <button type="submit" class="btn-login">
+                        Add Service
+                    </button>
+                </div>
+
+
+            </form>
+
+            <div class="login-footer">
+                <a asp-action="BarangayServices" asp-controller="Admin">
+                    ← Back to Barangay Services
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

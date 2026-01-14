@@ -59,43 +59,49 @@
     </div>
 
     <!-- REQUEST DETAILS -->
-    <div class="profile-card highlight">
+    <div class="profile-card highlight request-details-card">
         <h4>Request Details</h4>
 
         <form asp-action="UpdateClaimSchedule" method="post">
-            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="serviceName" value="@ViewBag.ServiceName" />
 
-            <div class="profile-grid">
+            <div class="request-grid">
 
-                <div>
-                    <b>Service:</b> @ViewBag.ServiceName
+                <!-- Service -->
+                <div class="request-item">
+                    <label>Service</label>
+                    <span>@ViewBag.ServiceName</span>
                 </div>
 
-                <div>
-                    <b>Purpose:</b> @Model.Purpose
+                <!-- Purpose -->
+                <div class="request-item full">
+                    <label>Purpose</label>
+                    <span>@Model.Purpose</span>
                 </div>
 
-                <div>
+                <!-- Date -->
+                <div class="request-item">
                     <label>Date to Claim</label>
                     <input type="date"
                            id="dateToClaim"
                            name="DateToClaim"
-                           value="@(Model.DateToClaim?.ToString("yyyy-MM-dd"))"
-                           class="form-control" />
+                           value="@(Model.DateToClaim?.ToString("yyyy-MM-dd"))" />
                 </div>
 
-                <div>
+                <!-- Time -->
+                <div class="request-item">
                     <label>Time to Claim</label>
                     <input type="time"
                            id="timeToClaim"
                            name="TimeToClaim"
-                           value="@(Model.TimeToClaim?.ToString(@"hh\:mm"))"
-                           class="form-control" />
+                           value="@(Model.TimeToClaim?.ToString(@"hh\:mm"))" />
                 </div>
 
-                <div>
+                <!-- Status -->
+                <div class="request-item">
                     <label>Status</label>
-                    <select id="statusSelect" name="Status" class="form-control">
+                    <select id="statusSelect" name="Status" class="status-select">
                         <option value="Pending" selected="@(Model.Status == "Pending")">Pending</option>
                         <option value="Approved" selected="@(Model.Status == "Approved")">Approved</option>
                         <option value="Rejected" selected="@(Model.Status == "Rejected")">Rejected</option>
@@ -114,13 +120,14 @@
         </form>
     </div>
 
-
-
     <!-- ACTION -->
     <div class="profile-actions">
-        <a asp-action="ServiceRequests" class="btn-secondary">
+        <a asp-action="ServiceRequests"
+           asp-route-service="@Model.ServiceType"
+           class="btn-secondary">
             ← Back to Requests
         </a>
+
     </div>
 
 </div>

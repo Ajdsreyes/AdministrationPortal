@@ -9,13 +9,14 @@
         public bool IsEnabled { get; set; }
 
         // ===== SERVICE ANALYTICS =====
+
+        // 🔥 AUTO-UPDATED COUNTS
         public int Pending { get; set; }
         public int Approved { get; set; }
         public int Ready { get; set; }
-        public int Rejected { get; set; }
 
         // Optional (nice to have)
         public int TotalRequests =>
-            Pending + Approved + Ready + Rejected;
+            Pending + Approved + Ready;
     }
 }

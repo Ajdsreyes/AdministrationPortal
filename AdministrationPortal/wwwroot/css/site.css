@@ -1,22 +1,68 @@
+/* 
+=============================================================================
+  site.css
+  Main stylesheet for the application dashboard.
+  
+  Architecture:
+  1. Base & Global Styles
+  2. Main Layout (Sidebar & Wrapper)
+  3. Header & Navigation
+  4. Dashboard Components (Cards, Grids, Charts)
+  5. Data Display (Tables)
+  6. UI Elements (Buttons & Interactions)
+=============================================================================
+*/
+
+/* -------------------------------------------------------------------------- */
+/* 1. Base & Global Styles                                                    */
+/* -------------------------------------------------------------------------- */
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #f5f7fa;
+    /* Using the background color defined in the latest app-container declaration */
+    background: #f6f8fb;
 }
 
+/* -------------------------------------------------------------------------- */
+/* 2. Main Layout                                                             */
+/* -------------------------------------------------------------------------- */
+
+/* 
+   Main Wrapper 
+   Uses Flexbox to position the Sidebar next to the Main Content.
+*/
 .app-container {
     display: flex;
+    background: #f6f8fb;
+    min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* 
+   Sidebar Component
+   Fixed width of 260px (taken from the latest definition).
+*/
 .sidebar {
-    width: 250px;
+    width: 260px;
     background: #43a047;
     color: white;
-    padding: 25px;
     height: 100vh;
+    padding: 25px;
+    /* Optional: ensures sidebar stays on top/fixed if needed later */
+    position: relative;
 }
 
+/* 
+   Content Wrapper
+   flex: 1 ensures it takes up all remaining width after the sidebar.
+*/
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Header & Navigation (Sidebar Internals)                                 */
+/* -------------------------------------------------------------------------- */
 .brand {
     margin: 0;
 }
@@ -27,29 +73,30 @@ body {
     margin-top: 30px;
 }
 
-.menu li {
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-}
+    .menu li {
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
 
-.menu li.active,
-.menu li:hover {
-    background: rgba(255,255,255,0.2);
-}
+        .menu li.active,
+        .menu li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
 .logout {
     position: absolute;
     bottom: 30px;
 }
 
-/* MAIN CONTENT */
-.main-content {
-    flex: 1;
-    padding: 30px;
-}
-
-.top-bar {
+/* 
+   Top Bar / Header 
+   Supports both class names found in source (.top-bar and .dashboard-header)
+   to ensure backward compatibility with your HTML.
+*/
+.top-bar,
+.dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,16 +108,16 @@ body {
     border: 1px solid #ccc;
 }
 
-.btn-green {
-    background: #43a047;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
-    margin-left: 10px;
-}
+/* -------------------------------------------------------------------------- */
+/* 4. Dashboard Components (Grids & Cards)                                    */
+/* -------------------------------------------------------------------------- */
 
-/* STATS */
+/* 
+   Stats Grid Layouts
+   Note: Source code had two versions. 
+   .stats = 4 columns
+   .stats-grid = 3 columns
+*/
 .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -78,26 +125,40 @@ body {
     margin-top: 30px;
 }
 
-.stat-card {
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+/* 
+   Shared Card Styling 
+   Consolidated .stat-card, .documents, and .chart as they share visual properties.
+*/
+.stat-card,
+.documents,
+.chart {
     background: white;
     padding: 20px;
     border-radius: 12px;
 }
 
-/* LOWER */
-.lower {
+/* 
+   Lower Content Grids 
+   Supports .lower and .content-grid class names.
+*/
+.lower,
+.content-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
     margin-top: 30px;
 }
 
-.documents, .chart {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-}
-
+/* -------------------------------------------------------------------------- */
+/* 5. Data Display (Tables)                                                   */
+/* -------------------------------------------------------------------------- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -107,50 +168,48 @@ th, td {
     padding: 10px;
     text-align: left;
 }
-.app-container {
+
+/* -------------------------------------------------------------------------- */
+/* 6. UI Elements & Buttons                                                   */
+/* -------------------------------------------------------------------------- */
+
+/* Utility: Center alignment wrapper */
+.center-actions {
     display: flex;
-    background: #f6f8fb;
+    justify-content: center;
+    margin: 18px 0;
 }
 
-.sidebar {
-    width: 260px;
+/* Standard Green Button */
+.btn-green {
     background: #43a047;
     color: white;
-    height: 100vh;
-    padding: 25px;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin-left: 10px;
+    cursor: pointer;
 }
 
-.main-content {
-    flex: 1;
-    padding: 30px;
+/* Rounded Pill Button */
+.btn-add {
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    /* Add cursor pointer for better UX */
+    cursor: pointer;
 }
 
-/* HEADER */
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Danger/Delete Icon Button */
+.btn-icon-danger {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ef4444;
+    transition: opacity 0.2s;
 }
 
-/* STATS */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 25px;
-}
-
-.stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-/* LOWER GRID */
-.content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 20px;
-    margin-top: 30px;
-}
-
+    .btn-icon-danger:hover {
+        opacity: 0.7;
+    }

@@ -6,11 +6,16 @@
 
 <!-- PAGE HEADER -->
 <div class="page-header">
-    <h2>@ViewBag.ServiceName Requests</h2>
+    <div>
+        <h2>Barangay Service Requests</h2>
+        <p>Monitor and process all resident service requests</p>
+    </div>
 
     <div class="filter-bar">
         <button class="btn-filter active" data-status="all">All</button>
         <button class="btn-filter" data-status="pending">Pending</button>
+        <button class="btn-filter" data-status="approved">Approved</button>
+        <button class="btn-filter" data-status="readyforclaim">Ready for Claim</button>
     </div>
 </div>
 
@@ -20,7 +25,9 @@
         <thead>
             <tr>
                 <th>Resident</th>
-                <th>Date Requested</th>
+                <th>Service</th>
+                <th>Date to Claim</th>
+                <th>Time</th>
                 <th>Status</th>
                 <th style="width:120px;">Action</th>
             </tr>
@@ -30,6 +37,7 @@
             @foreach (var r in Model)
             {
                 <tr data-status="@r.Status.ToLower().Replace(" ", "")">
+
                     <td>
                         <div class="user-info">
                             <img src="@r.UploadedPhotoUrl" class="avatar" />
@@ -37,26 +45,33 @@
                         </div>
                     </td>
 
-                    <td>@r.DateRequested.ToString("MM/dd/yyyy")</td>
+                    <td>@r.ServiceType</td>
 
                     <td>
-                        <select class="status-select @r.Status.ToLower().Replace(" ", "")">
-                            <option selected>@r.Status</option>
-                            <option>Pending</option>
-                            <option>Approved</option>
-                            <option>Rejected</option>
-                            <option>Ready for Claim</option>
-                            <option>Released</option>
-                        </select>
+                        @(r.DateToClaim.HasValue
+                                            ? r.DateToClaim.Value.ToString("MMM dd, yyyy")
+                                            : "—")
+                    </td>
+
+                    <td>
+                        @(r.TimeToClaim.HasValue
+                                            ? r.TimeToClaim.Value.ToString(@"hh\:mm")
+                                            : "—")
+                    </td>
+
+                    <td>
+                        <span class="status @r.Status.ToLower().Replace(" ", "")">
+                            @r.Status
+                        </span>
                     </td>
 
                     <td class="actions">
-                        <!-- VIEW REQUEST -->
                         <i class="bi bi-eye action-icon"
                            title="View Details"
                            onclick="location.href='@Url.Action("ViewServiceRequest", "Admin", new { id = r.Id })'">
                         </i>
                     </td>
+
                 </tr>
             }
         </tbody>
@@ -65,15 +80,6 @@
 
 @section Scripts {
     <script>
-        // Change color when status changes
-        document.querySelectorAll(".status-select").forEach(select => {
-            select.addEventListener("change", function () {
-                this.className = "status-select " +
-                    this.value.toLowerCase().replaceAll(" ", "");
-            });
-        });
-
-        // Filter buttons
         document.querySelectorAll(".btn-filter").forEach(btn => {
             btn.addEventListener("click", () => {
                 document.querySelectorAll(".btn-filter")

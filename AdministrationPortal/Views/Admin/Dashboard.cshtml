@@ -11,16 +11,6 @@
         <h2>Mabuhay, Barangay Malanday!</h2>
         <p>Maligayang pagbabalik, kaibigan</p>
     </div>
-
-    <div class="header-right">
-        <input type="text" placeholder="Search file and folder" />
-        <button>Create New</button>
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <div class="icon"></div>
-        <button type="button" onclick="toggleDark()">🌙</button>
-
-    </div>
 </div>
 
 <div class="stats">
@@ -77,36 +67,32 @@
 <div class="bottom">
     <div class="documents">
         <div class="section-title">
-            <h4>Barangay Released Documents</h4>
-            <span>View all</span>
+            <h4>Barangay Documents</h4>
         </div>
 
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Members</th>
-                <th>Size</th>
-                <th>Last Modified</th>
-            </tr>
-            <tr>
-                <td>Barangay Clearance</td>
-                <td>3 members</td>
-                <td>3 MB</td>
-                <td>Sep 13, 2023</td>
-            </tr>
-            <tr>
-                <td>Barangay Certificate</td>
-                <td>5 members</td>
-                <td>8 MB</td>
-                <td>Sep 15, 2023</td>
-            </tr>
-            <tr>
-                <td>Cedula</td>
-                <td>2 members</td>
-                <td>4 MB</td>
-                <td>Sep 24, 2023</td>
-            </tr>
-        </table>
+        <div class="documents-grid">
+
+            <div class="doc-folder" onclick="openFolder('Barangay Clearance')">
+                <i class="bi bi-folder-fill"></i>
+                <span>Barangay Clearance</span>
+            </div>
+
+            <div class="doc-folder" onclick="openFolder('Barangay Certificate')">
+                <i class="bi bi-folder-fill"></i>
+                <span>Barangay Certificate</span>
+            </div>
+
+            <div class="doc-folder" onclick="openFolder('Cedula')">
+                <i class="bi bi-folder-fill"></i>
+                <span>Cedula</span>
+            </div>
+
+            <div class="doc-folder" onclick="openFolder('Barangay ID')">
+                <i class="bi bi-folder-fill"></i>
+                <span>Barangay ID</span>
+            </div>
+
+        </div>
     </div>
 
     <div class="right-panels">
@@ -122,14 +108,63 @@
         </div>
 
 
-        <div class="recent">
-            <div class="section-title">
-                <h4>Recent Open</h4>
-                <span>View all</span>
+        <div class="dashboard-card">
+
+            <div class="card-header">
+                <h3>Recent Open</h3>
             </div>
 
-            <div class="file">Barangay ID <span>3.5 MB</span></div>
-            <div class="file">Cedula <span>5.8 MB</span></div>
+            <div class="card-content">
+                <div id="recentOpenCards" class="recent-cards">
+                    <div class="recent-empty">
+                        No recent folders opened
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>
+
+
+
+        <script>
+            let recentOpen = [];
+
+            function openFolder(name) {
+                // remove if already exists
+                recentOpen = recentOpen.filter(x => x !== name);
+
+                // add to top
+                recentOpen.unshift(name);
+
+                // keep ONLY last 2
+                if (recentOpen.length > 2) {
+                    recentOpen = recentOpen.slice(0, 2);
+                }
+
+                renderRecentOpen();
+            }
+
+            function renderRecentOpen() {
+                const container = document.getElementById("recentOpenCards");
+                container.innerHTML = "";
+
+                if (recentOpen.length === 0) {
+                    container.innerHTML = `
+                        <div class="recent-empty">
+                            No recent folders opened
+                        </div>`;
+                    return;
+                }
+
+                recentOpen.forEach(item => {
+                    const card = document.createElement("div");
+                    card.className = "recent-card";
+                    card.innerHTML = `
+                        <i class="bi bi-folder-fill"></i>
+                        <span>${item}</span>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+        </script>
+

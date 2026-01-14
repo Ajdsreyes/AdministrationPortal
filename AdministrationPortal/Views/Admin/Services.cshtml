@@ -1,0 +1,45 @@
+﻿@model List<AdministrationPortal.Models.ViewModels.ServiceVM>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Enable / Disable</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <!-- SERVICE NAME -->
+                <td>@service.ServiceName</td>
+
+                <!-- STATUS BADGE -->
+                <td>
+                    <span class="badge @(service.IsEnabled ? "bg-success" : "bg-danger")">
+                        @(service.IsEnabled ? "Enabled" : "Disabled")
+                    </span>
+                </td>
+
+                <!-- TOGGLE SWITCH -->
+                <td>
+                    <form asp-action="ToggleService"
+                          asp-controller="Admin"
+                          asp-route-id="@service.Id"
+                          method="post"
+                          class="toggle-form">
+
+                        <label class="switch">
+                            <input type="checkbox"
+                                   onchange="this.form.submit()"
+                                   @(service.IsEnabled ? "checked" : "") />
+                            <span class="slider"></span>
+                        </label>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

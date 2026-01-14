@@ -20,8 +20,23 @@
         </div>
     </div>
 
+    <!-- Global JS -->
     <script src="~/js/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Logout modal helpers -->
+    <script>
+        function openLogoutModal() {
+            document.getElementById("logoutModal").classList.add("show");
+        }
+
+        function closeLogoutModal() {
+            document.getElementById("logoutModal").classList.remove("show");
+        }
+    </script>
+
+    <!-- Page-specific scripts (ONLY ONCE) -->
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

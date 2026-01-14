@@ -8,53 +8,62 @@
     <a asp-action="AddService" class="btn-primary">+ Add Service</a>
 </div>
 
-<div class="service-grid">
+<div class="services-grid">
     @foreach (var s in Model)
     {
-        <div class="service-card">
+        <div class="service-card big-card">
 
-            <!-- HEADER -->
             <div class="service-header">
                 <div class="service-icon">
                     <i class="bi @s.Icon"></i>
                 </div>
 
-                <span class="badge @(s.IsEnabled ? "badge-active" : "badge-disabled")">
+                <span class="service-status badge @(s.IsEnabled ? "badge-active" : "badge-disabled")">
                     @(s.IsEnabled ? "Enabled" : "Disabled")
                 </span>
             </div>
 
-            <!-- SERVICE NAME -->
             <h4>@s.ServiceName</h4>
 
-            <!-- 📊 SERVICE ANALYTICS (PUT IT HERE) -->
             <div class="service-stats">
                 <span>Pending: <b>@s.Pending</b></span>
                 <span>Approved: <b>@s.Approved</b></span>
                 <span>Ready: <b>@s.Ready</b></span>
             </div>
 
-            <!-- ACTIONS -->
             <div class="service-actions">
-                <a asp-action="ServiceRequests"
+
+                <i class="bi bi-eye action-icon"
+                   title="View Requests"
+                   onclick="location.href='@Url.Action(
+                                           "ServiceRequests",
+                                           "Admin",
+                                           new { service = s.ServiceName }
+                                      )'">
+            </i>
+
+                <a asp-action="EditServiceRequirements"
                    asp-route-id="@s.Id"
-                   title="View Requests">
-                    <i class="bi bi-eye"></i>
+                   title="Edit Requirements">
+                    <i class="bi bi-sliders"></i>
                 </a>
 
-                <a asp-action="EditService"
-                   asp-route-id="@s.Id"
-                   title="Edit Service">
-                    <i class="bi bi-pencil"></i>
-                </a>
+                <form asp-action="ToggleService"
+                      asp-controller="Admin"
+                      asp-route-id="@s.Id"
+                      method="post"
+                      class="toggle-form">
 
-                <a asp-action="ToggleService"
-                   asp-route-id="@s.Id"
-                   title="Enable / Disable">
-                    <i class="bi @(s.IsEnabled ? "bi-toggle-on text-success" : "bi-toggle-off text-muted")"></i>
-                </a>
+                    <label class="switch">
+                        <input type="checkbox"
+                               onchange="this.form.submit()"
+                               @(s.IsEnabled ? "checked" : "") />
+                        <span class="slider"></span>
+                    </label>
+                </form>
+
             </div>
 
         </div>
-    }
+        }
 </div>

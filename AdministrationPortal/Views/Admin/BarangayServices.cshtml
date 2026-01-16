@@ -36,21 +36,23 @@
                 <i class="bi bi-eye action-icon"
                    title="View Requests"
                    onclick="location.href='@Url.Action(
-                                           "ServiceRequests",
-                                           "Admin",
-                                           new { service = s.ServiceName }
-                                      )'">
+                                                               "ServiceRequests",
+                                                               "Admin",
+                                                               new { serviceId = s.ServiceId }
+                                                          )'">
             </i>
 
+                @* Changed s.Id to s.ServiceId to match SQL script Primary Key *@
                 <a asp-action="EditServiceRequirements"
-                   asp-route-id="@s.Id"
+                   asp-route-id="@s.ServiceId"
                    title="Edit Requirements">
                     <i class="bi bi-sliders"></i>
                 </a>
 
+                @* Changed s.Id to s.ServiceId to match AdminController toggle logic *@
                 <form asp-action="ToggleService"
                       asp-controller="Admin"
-                      asp-route-id="@s.Id"
+                      asp-route-id="@s.ServiceId"
                       method="post"
                       class="toggle-form">
 

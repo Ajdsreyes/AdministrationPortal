@@ -2,10 +2,10 @@
 {
     public class ServiceRequirementVM
     {
-        public int Id { get; set; }
+        public int PurposeId { get; set; }
         public int ServiceId { get; set; }
 
-        public string Label { get; set; }
+        public string PurposeName { get; set; }
         public string FieldType { get; set; }
         public bool IsRequired { get; set; }
 

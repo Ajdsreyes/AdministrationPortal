@@ -7,7 +7,6 @@
 <div class="profile-container">
     <div class="profile-card highlight">
 
-        <!-- HEADER -->
         <div class="page-header">
             <div>
                 <h3>Edit Service Requirements</h3>
@@ -18,9 +17,9 @@
         </div>
 
         <form asp-action="SaveServiceRequirements" method="post">
+            @* serviceId must match the parameter name in your AdminController *@
             <input type="hidden" name="serviceId" value="@ViewBag.ServiceId" />
 
-            <!-- REQUIREMENTS TABLE -->
             <table class="user-table">
                 <thead>
                     <tr>
@@ -37,37 +36,44 @@
                     {
                         <tr>
                             <td>
-                                <input type="hidden" name="requirements[@i].Id" value="@Model[i].Id" />
-                                <input type="hidden" name="requirements[@i].IsDeleted" value="false" />
+                                <input type="hidden" name="serviceId" value="@ViewBag.ServiceId" />
+
+                                <button type="button" class="btn btn-iassist" onclick="addNewField()">
+                                    <i class="bi bi-plus"></i> Add New Requirement Field
+                                </button>
 
                                 <input class="form-input"
                                        name="requirements[@i].Label"
-                                       value="@Model[i].Label"
-                                       placeholder="e.g. Date of Birth" />
+                                       value="@Model[i].PurposeName"
+                                       placeholder="e.g. Date of Birth"
+                                       required />
                             </td>
 
                             <td>
                                 <select name="requirements[@i].FieldType" class="form-select">
-                                    <option selected>@Model[i].FieldType</option>
-                                    <option>text</option>
-                                    <option>textarea</option>
-                                    <option>date</option>
-                                    <option>number</option>
-                                    <option>email</option>
-                                    <option>select</option>
+                                    <option value="text" selected="@(Model[i].FieldType == "text")">text</option>
+                                    <option value="textarea" selected="@(Model[i].FieldType == "textarea")">textarea</option>
+                                    <option value="date" selected="@(Model[i].FieldType == "date")">date</option>
+                                    <option value="number" selected="@(Model[i].FieldType == "number")">number</option>
+                                    <option value="email" selected="@(Model[i].FieldType == "email")">email</option>
+                                    <option value="select" selected="@(Model[i].FieldType == "select")">select</option>
                                 </select>
                             </td>
 
                             <td class="text-center">
+                                @* Checkboxes need a value="true" to bind correctly to a boolean *@
                                 <input type="checkbox"
                                        name="requirements[@i].IsRequired"
-                                       checked="@Model[i].IsRequired" />
+                                       value="true"
+                                       @(Model[i].IsRequired ? "checked" : "") />
+                                <input type="hidden" name="requirements[@i].IsRequired" value="false" />
                             </td>
 
                             <td>
+                                @* We bind this as a string; the Controller will split it into a List *@
                                 <input class="form-input"
                                        name="requirements[@i].Options"
-                                       value="@string.Join(",", Model[i].Options)"
+                                       value="@(Model[i].Options != null ? string.Join(",", Model[i].Options) : "")"
                                        placeholder="Only for select fields" />
                             </td>
 
@@ -84,7 +90,6 @@
                 </tbody>
             </table>
 
-            <!-- ADD REQUIREMENT -->
             <div class="center-actions">
                 <button type="button"
                         class="btn-secondary btn-add"
@@ -93,7 +98,6 @@
                 </button>
             </div>
 
-            <!-- ACTIONS -->
             <div class="profile-actions">
                 <button type="submit" class="btn-primary">
                     Save Requirements
@@ -114,7 +118,8 @@
 
         function deleteRow(btn) {
             const row = btn.closest("tr");
-            row.querySelector("input[name$='.IsDeleted']").value = "true";
+            // Set IsDeleted flag to true and hide the row
+            row.querySelector(".is-deleted-flag").value = "true";
             row.style.display = "none";
         }
 
@@ -125,25 +130,26 @@
             row.innerHTML = `
                 <td>
                     <input type="hidden" name="requirements[${index}].Id" value="0" />
-                    <input type="hidden" name="requirements[${index}].IsDeleted" value="false" />
+                    <input type="hidden" name="requirements[${index}].IsDeleted" value="false" class="is-deleted-flag" />
                     <input class="form-input"
                            name="requirements[${index}].Label"
-                           placeholder="New field label" />
+                           placeholder="New field label" required />
                 </td>
 
                 <td>
                     <select name="requirements[${index}].FieldType" class="form-select">
-                        <option>text</option>
-                        <option>textarea</option>
-                        <option>date</option>
-                        <option>number</option>
-                        <option>email</option>
-                        <option>select</option>
+                        <option value="text">text</option>
+                        <option value="textarea">textarea</option>
+                        <option value="date">date</option>
+                        <option value="number">number</option>
+                        <option value="email">email</option>
+                        <option value="select">select</option>
                     </select>
                 </td>
 
                 <td class="text-center">
-                    <input type="checkbox" name="requirements[${index}].IsRequired" />
+                    <input type="checkbox" name="requirements[${index}].IsRequired" value="true" />
+                    <input type="hidden" name="requirements[${index}].IsRequired" value="false" />
                 </td>
 
                 <td>

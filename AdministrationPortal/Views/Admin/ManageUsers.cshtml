@@ -4,7 +4,6 @@
     ViewData["Title"] = "Manage Users";
 }
 
-<!-- PAGE HEADER -->
 <div class="page-header">
     <h2>Residents List</h2>
 
@@ -16,7 +15,6 @@
     </div>
 </div>
 
-<!-- USERS TABLE -->
 <div class="table-card">
     <table class="user-table">
         <thead>
@@ -41,8 +39,9 @@
                     </td>
 
                     <td>@user.FullName</td>
-                    <td>@user.Address</td>
-                    <td>@user.ContactNumber</td>
+                    <td>@user.FullAddress</td>
+                    @* Changed ContactNumber to ContactNo to match SQL/VM *@
+                    <td>@user.ContactNo</td>
 
                     <td>
                         <span class="status @(user.IsActive ? "active" : "inactive")">
@@ -51,18 +50,19 @@
                     </td>
 
                     <td class="actions">
-                        <a asp-action="ViewUser" asp-route-id="@user.Id" title="View">
+                        @* Changed Id to UserId to match SQL Primary Key *@
+                        <a asp-action="ViewUser" asp-route-id="@user.UserId" title="View">
                             <i class="bi bi-eye"></i>
                         </a>
 
-                        <a asp-action="EditUser" asp-route-id="@user.Id" title="Edit">
+                        <a asp-action="EditUser" asp-route-id="@user.UserId" title="Edit">
                             <i class="bi bi-pencil"></i>
                         </a>
 
                         @if (user.IsActive)
                         {
                             <a asp-action="Deactivate"
-                               asp-route-id="@user.Id"
+                               asp-route-id="@user.UserId"
                                title="Deactivate">
                                 <i class="bi bi-trash"></i>
                             </a>
@@ -70,7 +70,7 @@
                         else
                         {
                             <a asp-action="Reactivate"
-                               asp-route-id="@user.Id"
+                               asp-route-id="@user.UserId"
                                title="Reactivate">
                                 <i class="bi bi-arrow-clockwise"></i>
                             </a>
@@ -98,6 +98,7 @@
 
     <script>
         function confirmDelete(id) {
+            // Updated path to use UserId variable
             document.getElementById("confirmDeleteBtn").href =
                 "/Admin/Deactivate/" + id;
 
@@ -106,5 +107,4 @@
             ).show();
         }
     </script>
-
 }

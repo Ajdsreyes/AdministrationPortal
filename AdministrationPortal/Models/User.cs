@@ -1,47 +1,38 @@
-﻿namespace AdministrationPortal.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AdministrationPortal.Models
 {
-    public class UserVM
+    [Table("Users")] // Maps to your SQL table name
+    public class User
     {
-        // Aligned with UserId in SQL
+        [Key]
         public int UserId { get; set; }
 
-        public string LastName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
         public string? MiddleName { get; set; }
         public string? Suffix { get; set; }
-
-        // ADD THIS LINE TO FIX THE ERROR
-        public string? PhotoUrl { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
         public string Sex { get; set; } = string.Empty;
         public string CivilStatus { get; set; } = string.Empty;
         public string Religion { get; set; } = string.Empty;
 
-        // Aligned with HouseNoStreet in SQL
         public string HouseNoStreet { get; set; } = string.Empty;
         public string Barangay { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string Province { get; set; } = string.Empty;
+
         public int StayYears { get; set; }
         public int StayMonths { get; set; }
 
-        // Aligned with ContactNo in SQL
         public string? ContactNo { get; set; }
         public string Email { get; set; } = string.Empty;
 
+        public string? UploadPath { get; set; } // The actual database column for the photo
+
         public bool IsVoter { get; set; }
         public bool IsActive { get; set; }
-
-        // Logic-based properties (Not in Database)
-        public int Age => DateOfBirth.HasValue
-            ? DateTime.Today.Year - DateOfBirth.Value.Year
-            : 0;
-
-        public string FullName =>
-            $"{LastName}, {FirstName} {MiddleName} {Suffix}".Trim();
-
-        public string FullAddress =>
-            $"{HouseNoStreet}, {Barangay}, {City}, {Province}";
     }
 }

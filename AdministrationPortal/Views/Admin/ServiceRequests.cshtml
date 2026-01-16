@@ -4,7 +4,6 @@
     ViewData["Title"] = "Service Requests";
 }
 
-<!-- PAGE HEADER -->
 <div class="page-header">
     <div>
         <h2>Barangay Service Requests</h2>
@@ -19,7 +18,6 @@
     </div>
 </div>
 
-<!-- REQUESTS TABLE -->
 <div class="table-card">
     <table class="user-table">
         <thead>
@@ -36,16 +34,19 @@
         <tbody>
             @foreach (var r in Model)
             {
-                <tr data-status="@r.Status.ToLower().Replace(" ", "")">
+                @* Changed r.Status to r.StatusName *@
+                <tr data-status="@r.StatusName.ToLower().Replace(" ", "")">
 
                     <td>
                         <div class="user-info">
-                            <img src="@r.UploadedPhotoUrl" class="avatar" />
+                            @* Changed r.UploadedPhotoUrl to r.UploadPath *@
+                            <img src="@r.UploadPath" class="avatar" onerror="this.src='/images/default-avatar.png'" />
                             <span>@r.FullName</span>
                         </div>
                     </td>
 
-                    <td>@r.ServiceType</td>
+                    @* Changed r.ServiceType to r.ServiceName *@
+                    <td>@r.ServiceName</td>
 
                     <td>
                         @(r.DateToClaim.HasValue
@@ -60,15 +61,17 @@
                     </td>
 
                     <td>
-                        <span class="status @r.Status.ToLower().Replace(" ", "")">
-                            @r.Status
+                        @* Changed r.Status to r.StatusName *@
+                        <span class="status @r.StatusName.ToLower().Replace(" ", "")">
+                            @r.StatusName
                         </span>
                     </td>
 
                     <td class="actions">
                         <i class="bi bi-eye action-icon"
                            title="View Details"
-                           onclick="location.href='@Url.Action("ViewServiceRequest", "Admin", new { id = r.Id })'">
+                           @* Changed r.Id to r.RequestId *@
+                           onclick="location.href='@Url.Action("ViewServiceRequest", "Admin", new { id = r.RequestId })'">
                         </i>
                     </td>
 

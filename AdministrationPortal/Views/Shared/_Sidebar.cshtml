@@ -9,6 +9,7 @@
     </div>
 
     <ul class="nav">
+        @* Matches AdminController.Dashboard() *@
         <li class="@(currentAction == "Dashboard" ? "active" : "")">
             <a asp-controller="Admin" asp-action="Dashboard">
                 <i class="bi bi-speedometer2"></i>
@@ -16,6 +17,7 @@
             </a>
         </li>
 
+        @* Matches AdminController.ManageUsers() *@
         <li class="@(currentAction == "ManageUsers" ? "active" : "")">
             <a asp-controller="Admin" asp-action="ManageUsers">
                 <i class="bi bi-people"></i>
@@ -23,6 +25,7 @@
             </a>
         </li>
 
+        @* Matches AdminController.BarangayServices() *@
         <li class="@(currentAction == "BarangayServices" ? "active" : "")">
             <a asp-controller="Admin" asp-action="BarangayServices">
                 <i class="bi bi-file-earmark-text"></i>
@@ -30,6 +33,7 @@
             </a>
         </li>
 
+        @* Matches AdminController.AdminProfile() *@
         <li class="@(currentAction == "AdminProfile" ? "active" : "")">
             <a asp-controller="Admin" asp-action="AdminProfile">
                 <i class="bi bi-person-circle"></i>
@@ -38,7 +42,6 @@
         </li>
     </ul>
 
-    <!-- 🔻 LOGOUT (BOTTOM) -->
     <div class="sidebar-logout">
         <button class="logout-btn" onclick="openLogoutModal()">
             <i class="bi bi-box-arrow-right"></i>
@@ -47,7 +50,6 @@
     </div>
 </aside>
 
-<!-- 🔒 LOGOUT CONFIRMATION MODAL -->
 <div id="logoutModal" class="logout-modal">
     <div class="logout-modal-content">
         <h4>Confirm Logout</h4>
@@ -56,6 +58,7 @@
         <div class="logout-actions">
             <button class="btn-cancel" onclick="closeLogoutModal()">Cancel</button>
 
+            @* Matches AdminController.Logout() *@
             <a asp-controller="Admin"
                asp-action="Logout"
                class="btn-logout">

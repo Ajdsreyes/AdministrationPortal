@@ -3,46 +3,47 @@
     public class ServiceRequestVM
     {
         // ===== REQUEST INFO =====
-        public int Id { get; set; }
-        public string ServiceType { get; set; }
-        public DateTime DateRequested { get; set; }
-        public string Status { get; set; }
+        public int RequestId { get; set; }
+        public int ServiceId { get; set; }
+        public string ServiceName { get; set; } = string.Empty;
+        public DateTime? CreatedAt { get; set; }
+        public int StatusId { get; set; }
+        public string StatusName { get; set; } = string.Empty;
 
         // ===== RESIDENT BASIC INFO =====
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string Suffix { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string? MiddleName { get; set; }
+        public string LastName { get; set; } = string.Empty;
+        public string? Suffix { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string Sex { get; set; } = string.Empty;
+        public string CivilStatus { get; set; } = string.Empty;
+        public string Religion { get; set; } = string.Empty; // Added to match Controller mapping
 
-        public DateTime DateOfBirth { get; set; }
-        public int Age { get; set; }
-        public string Sex { get; set; }
-        public string CivilStatus { get; set; }
-        public string Religion { get; set; }
+        // ===== ADDRESS & CONTACT =====
+        public string HouseNoStreet { get; set; } = string.Empty;
+        public string Barangay { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Province { get; set; } = string.Empty;
+        public string ContactNo { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
 
-        // ===== ADDRESS =====
-        public string Street { get; set; }
-        public string Barangay { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-
+        // Length of Stay (Matches Users Table) - FIXED CS1061
         public int StayYears { get; set; }
         public int StayMonths { get; set; }
 
-        // ===== CONTACT =====
-        public string ContactNumber { get; set; }
-        public string Email { get; set; }
-
         // ===== SERVICE-SPECIFIC =====
-        public string Purpose { get; set; } // Clearance / Indigency / etc
-        public decimal? GrossAnnualIncome { get; set; } // Cedula only
-        public string UploadedPhotoUrl { get; set; } // Barangay ID
-
+        public string? Purpose { get; set; } // Added for display
+        public decimal? GrossAnnualIncome { get; set; }
+        public string? UploadPath { get; set; }
         public DateTime? DateToClaim { get; set; }
         public TimeSpan? TimeToClaim { get; set; }
 
         // ===== DISPLAY HELPERS =====
-        public string FullName =>
-            $"{LastName}, {FirstName} {MiddleName} {Suffix}".Trim();
+        public string FullName => $"{LastName}, {FirstName} {MiddleName} {Suffix}".Trim();
+
+        public int Age => DateOfBirth.HasValue
+            ? DateTime.Today.Year - DateOfBirth.Value.Year
+            : 0;
     }
 }

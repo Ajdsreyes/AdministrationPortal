@@ -5,7 +5,6 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<!-- HEADER -->
 <div class="header">
     <div>
         <h2>Mabuhay, Barangay Malanday!</h2>
@@ -21,7 +20,7 @@
         </div>
         <p>Total Registered Users</p>
         <h3 class="counter" data-target="@Model.TotalUsers">0</h3>
-        <small>Last update: 12 Jan 2026</small>
+        <small>Last update: @DateTime.Now.ToString("dd MMM yyyy")</small>
     </div>
 
     <div class="card">
@@ -30,7 +29,7 @@
         </div>
         <p>Total Service Request</p>
         <h3 class="counter" data-target="@Model.TotalRequests">0</h3>
-        <small>Last update: 12 Jan 2026</small>
+        <small>Last update: @DateTime.Now.ToString("dd MMM yyyy")</small>
     </div>
 
     <div class="card">
@@ -39,7 +38,7 @@
         </div>
         <p>Approved Requests</p>
         <h3 class="counter" data-target="@Model.ApprovedRequests">0</h3>
-        <small>Last update: 12 Jan 2026</small>
+        <small>Last update: @DateTime.Now.ToString("dd MMM yyyy")</small>
     </div>
 
     <div class="card">
@@ -48,7 +47,7 @@
         </div>
         <p>Rejected Requests</p>
         <h3 class="counter" data-target="@Model.RejectedRequests">0</h3>
-        <small>Last update: 12 Jan 2026</small>
+        <small>Last update: @DateTime.Now.ToString("dd MMM yyyy")</small>
     </div>
 
     <div class="card">
@@ -57,13 +56,12 @@
         </div>
         <p>Ready to Claim Documents</p>
         <h3 class="counter" data-target="@Model.ReadyToClaim">0</h3>
-        <small>Last update: 12 Jan 2026</small>
+        <small>Last update: @DateTime.Now.ToString("dd MMM yyyy")</small>
     </div>
 
 </div>
 
 
-<!-- LOWER GRID -->
 <div class="bottom">
     <div class="documents">
         <div class="section-title">
@@ -101,7 +99,7 @@
 
             <div class="donut">
                 <div class="donut-center">
-                    <span>15,000</span>
+                    <span>@Model.TotalUsers.ToString("N0")</span>
                     <small>Total</small>
                 </div>
             </div>
@@ -167,4 +165,3 @@
                 });
             }
         </script>
-

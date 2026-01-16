@@ -1,14 +1,26 @@
 using System.Diagnostics;
 using AdministrationPortal.Models;
+using AdministrationPortal.Data; // Ensure this points to where your ApplicationDbContext is
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdministrationPortal.Controllers
 {
     public class HomeController : Controller
     {
+        // 1. This private variable holds the database connection
+        private readonly ApplicationDbContext _context;
+
+        // 2. The Constructor: This "injects" the database into the controller
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            // 3. This fetches the list of users from your SQL table [Users]
+            var users = _context.Users.ToList();
+            return View(users);
         }
 
         public IActionResult Privacy()

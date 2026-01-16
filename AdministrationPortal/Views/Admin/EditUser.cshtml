@@ -9,7 +9,8 @@
 
 <form asp-action="EditUser" method="post" class="table-card">
 
-    <input type="hidden" asp-for="Id" />
+    @* Changed Id to UserId to match SQL Primary Key *@
+    <input type="hidden" asp-for="UserId" />
 
     <h4>Personal Information</h4>
     <div class="form-grid">
@@ -25,7 +26,8 @@
 
     <h4>Address</h4>
     <div class="form-grid">
-        <input asp-for="Street" placeholder="House # / Street" />
+        @* Changed Street to HouseNoStreet to match SQL Column *@
+        <input asp-for="HouseNoStreet" placeholder="House # / Street" />
         <input asp-for="Barangay" placeholder="Barangay" />
         <input asp-for="City" placeholder="City" />
         <input asp-for="Province" placeholder="Province" />
@@ -35,7 +37,8 @@
 
     <h4>Contact</h4>
     <div class="form-grid">
-        <input asp-for="ContactNumber" placeholder="Contact Number" />
+        @* Changed ContactNumber to ContactNo to match SQL Column *@
+        <input asp-for="ContactNo" placeholder="Contact Number" />
         <input asp-for="Email" placeholder="Email Address" />
     </div>
 
